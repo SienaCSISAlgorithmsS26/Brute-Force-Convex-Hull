@@ -158,6 +158,9 @@ public class BruteForceConvexHull {
         // we will build the line segments that form the hull in this list
         ArrayList<LineSegment> hull = new ArrayList<LineSegment>();
 
+        double startTime = System.currentTimeMillis();
+        long checks = 0;
+
         // consider each pair of points
         for (int i = 0; i < numPoints-1; i++) {
 
@@ -182,6 +185,7 @@ public class BruteForceConvexHull {
                     if (v1.equals(vtest) || v2.equals(vtest)) 
                         continue;
                     double checkVal = a * vtest.getX() + b * vtest.getY() - c;
+                    checks++;
                     if (debug)
                         System.out.println("Checking " + vtest + 
                             " for segment from " + v1 + 
@@ -221,6 +225,8 @@ public class BruteForceConvexHull {
                 if (!eliminated) hull.add(new LineSegment(v1, v2));
             }
         }
+
+        double elapsedTime = System.currentTimeMillis() - startTime;
 
         // we now have a list of line segments that form the hull
         if (debug) {
@@ -289,7 +295,7 @@ public class BruteForceConvexHull {
         }
 	else if (args[1].equals("timings")) {
 
-	    System.out.println("Replace this printout with your timing results line for this graph!");
+	    System.out.println(args[0] + " " + points.size() + " " + elapsedTime + " " + checks);
 	}
 	else {
             System.err.println("This statement should never be reached.");		
